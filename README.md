@@ -44,7 +44,7 @@ argocd app create guestbook --repo https://github.com/argoproj/argocd-example-ap
 #OR try:
 argocd app create argocd-demo --repo https://github.com/RFinland/argocd --path yamls --dest-server https://kubernetes.default.svc --dest-namespace default 
 ```
-Lets sysn our apps:
+Lets sync our apps:
 ```bash
 argocd app sync guestbook
 argocd app sync argocd-demo
