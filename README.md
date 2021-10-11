@@ -20,13 +20,15 @@ kubectl get -n argocd secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 ```
 Change the password using the command:
 ```bash
+#first you have to login:
+argocd login localhost:8080
 argocd account update-password
 argocd logout localhost:8080
-#then login with your ew password:
+#then login with your new password:
 ```bash
 argocd login localhost:8080
 ```
-App Time:
+### Create an app:
 ```bash
 argocd cluster list
 argocd app list
@@ -36,12 +38,13 @@ To create proj :
 ```bash
 argocd proj create myproj
 ```
-### Create an app:
+you can create your app in myproj or create inner default:
 ```bash
 argocd app create guestbook --repo https://github.com/argoproj/argocd-example-apps.git --path guestbook --dest-server https://kubernetes.default.svc --dest-namespace default
 #OR try:
 argocd app create argocd-demo --repo https://github.com/RFinland/argocd --path yamls --dest-server https://kubernetes.default.svc --dest-namespace default 
 ```
+Lets sysn our apps:
 ```bash
 argocd app sync guestbook
 argocd app sync argocd-demo
