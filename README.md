@@ -82,3 +82,8 @@ argocd app create guestbook \
  k -n argocd describe  application mygrafana
  k describe pod argocd-application-controller -n argocd
  ```
+ 
+test v1,2
+
+
+
