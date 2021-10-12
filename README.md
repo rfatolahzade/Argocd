@@ -44,9 +44,41 @@ argocd app create guestbook --repo https://github.com/argoproj/argocd-example-ap
 #OR try:
 argocd app create argocd-demo --repo https://github.com/RFinland/argocd --path yamls --dest-server https://kubernetes.default.svc --dest-namespace default 
 ```
+
 Lets sync our apps:
 ```bash
 argocd app sync guestbook
 argocd app sync argocd-demo
 ```
 
+if you change your github repo , you have to click on refresh buttom in argocd UI (if you enabled autosync-also you can wait to see your changes)
+```bash
+k scale deploy nginx --replicas 2
+```
+```bash
+helm repo add stable https://charts.helm.sh/stable
+```
+after add helm reo (via https) from UI
+Lets create application :
+in SOURCE:
+select the helm url and chart = grafana
+then select previuos version ,cuz we are going to update it 
+also  you can change the  helm values
+then create an app
+```bash
+argocd app wait mygrafana || argocd app logs mygrafana
+argocd app diff mygrafana
+```
+other way:
+```bash
+argocd app create guestbook \
+    --repo https://github.com/argoproj/argocd-example-apps.git \
+    --path helm-guestbook \
+    --dest-server https://kubernetes.default.svc \
+    --dest-namespace default
+```
+```bash
+ k -n argocd get  applications
+ k -n argocd describe  application mygrafana
+ k describe pod argocd-application-controller -n argocd
+ ```
