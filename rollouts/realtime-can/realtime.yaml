@@ -2,22 +2,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redisapp
+  name: nginxapp
   labels:
-    app: redis
+    app: nginx
 spec:
   selector:
     matchLabels:
-      app: redis
+      app: nginx
   replicas: 1
   template:
     metadata:
       labels:
-        app: redis
+        app: nginx
     spec:
       containers:
-      - name: redis
-        image: redis:4-32bit
+      - name: nginx
+        image: nginx
         resources:
           requests:
             cpu: 200m
@@ -28,15 +28,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: redisapp
+  name: nginxapp
   labels:
-    app: redis
+    app: nginx
 spec:
   ports:
   - port: 6379
     targetPort: 6379
   selector:
-    app: redis
+    app: nginx
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
@@ -56,10 +56,7 @@ spec:
     spec:
       containers:
       - name: realtimeapp
-        image: gbaeke/fluxapp:1.0.2
-        env:
-        - name: REDISHOST
-          value: "redisapp:6379"
+        image: nginx
         resources:
           requests:
             cpu: 25m
