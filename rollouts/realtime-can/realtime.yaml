@@ -43,16 +43,16 @@ kind: Rollout
 metadata:
   name: realtimeapp
   labels:
-    app: realtime
+    app: argocd-demo
 spec:
   selector:
     matchLabels:
-      app: realtime
+      app: argocd-demo
   replicas: 5
   template:
     metadata:
       labels:
-        app: realtime
+        app: argocd-demo
     spec:
       containers:
       - name: realtimeapp
@@ -71,11 +71,11 @@ spec:
         - containerPort: 8080
   strategy:
     canary:
-      stableService: realtimeapp-stable
-      canaryService: realtimeapp-canary
+      stableService: argocd-demo-stable
+      canaryService: argocd-demo-canary
       #trafficRouting:
         #nginx:
-          #stableIngress: realtimeapp-ingress
+          #stableIngress: argocd-demo-ingress
       steps:
       - setWeight: 50
       - pause: {}
@@ -91,20 +91,20 @@ spec:
   - port: 80
     targetPort: 8080
   selector:
-    app: realtime
+    app: argocd-demo
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: realtimeapp-canary
   labels:
-    app: realtime
+    app: argocd-demo
 spec:
   ports:
   - port: 80
     targetPort: 8080
   selector:
-    app: realtime
+    app: argocd-demo
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
